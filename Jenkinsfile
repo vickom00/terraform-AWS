@@ -12,7 +12,7 @@ pipeline {
                 sh 'terraform plan'
             }
         }
-        stage('Terraform apply') {
+        stage('Manual Check') {
             steps {
                 input message: 'Apply this Terraform', ok: 'Yes'
             }
