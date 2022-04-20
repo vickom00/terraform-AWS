@@ -1,3 +1,12 @@
+# saves terraform state ifle
+terraform {
+  backend "s3" {
+    bucket = "terraform-vickom00"
+    key    = "terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
 # Instance configuration
 resource "aws_instance" "web" {
   ami           = var.my_image
