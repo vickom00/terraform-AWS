@@ -5,7 +5,7 @@ resource "aws_vpc" "main_vpc" {
 
 resource "aws_subnet" "main_vpc_public_subnet" {
   vpc_id                  = aws_vpc.main_vpc.id
-  cidr_block              = "10.123.1.0/24"
+  cidr_block              = "10.5.1.0/24"
   map_public_ip_on_launch = true
   availability_zone       = "us-east-1a"
 
@@ -46,20 +46,4 @@ resource "aws_key_pair" "main_auth" {
   public_key = file("~/.ssh/amikey.pub")
 }
 
-resource "aws_instance" "dev_node" {
-  ami                    = data.aws_ami.server_ami.id
-  instance_type          = "t2.micro"
-  key_name               = aws_key_pair.main_auth.id
-  vpc_security_group_ids = [aws_security_group.vpc_sg.id]
-  subnet_id              = aws_subnet.main_vpc_public_subnet.id
-  user_data = file("userdata.tpl")
-  
-  root_block_device {
-    volume_size = 10
-  }
 
-  tags = {
-    Name = "dev-node"
-  }
-
-}
